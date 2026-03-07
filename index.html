@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neko</title>
+  <title>neko · axios build</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -44,6 +45,12 @@
       align-items: center;
       gap: 1.2rem;
       margin-bottom: 2rem;
+      animation: profileBuild 0.6s ease-out forwards;
+    }
+
+    @keyframes profileBuild {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     .avatar-wrapper {
@@ -124,6 +131,10 @@
       padding: 0.7rem 1.2rem;
       text-align: center;
       border: 1px solid #2c2c2c;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     .dev-tagline-compact p {
@@ -139,6 +150,10 @@
       padding: 1.5rem 1.4rem;
       border-left: 6px solid #ffffff;
       box-shadow: 0 8px 0 #030303;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     .song-row {
@@ -222,6 +237,10 @@
       display: flex;
       justify-content: flex-end;
       margin-top: 0.25rem;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.6s;
+      opacity: 0;
+      transform: translateY(10px);
     }
     .view-more-link {
       color: #a0a0a0;
@@ -237,12 +256,27 @@
       border-bottom-color: #ffffff;
     }
 
-    .more-section {
+    @keyframes buildItem {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .more-section, .projects-section {
       margin: 1.5rem 0 1.8rem 0;
     }
 
-    .hidden {
-      display: none !important;
+    .fade-section {
+      transition: opacity 0.3s ease;
+    }
+
+    .fade-section.hidden {
+      display: none;
     }
 
     .transform-embed {
@@ -260,6 +294,7 @@
       justify-content: center;
       gap: 0.8rem;
       padding: 0.4rem 0;
+      animation: buildItem 0.5s ease-out forwards;
     }
 
     .loading-state img {
@@ -285,6 +320,10 @@
 
     .projects-button-container {
       margin-bottom: 0.5rem;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+      transform: translateY(10px);
     }
     .projects-button {
       color: #a0a0a0;
@@ -307,7 +346,16 @@
       gap: 1rem;
       padding: 0.6rem 0.4rem;
       border-bottom: 1px solid #222;
+      animation: buildItem 0.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(10px);
     }
+
+    .profile-link-item:nth-child(2) { animation-delay: 0.4s; }
+    .profile-link-item:nth-child(3) { animation-delay: 0.6s; }
+    .profile-link-item:nth-child(4) { animation-delay: 0.8s; }
+    .profile-link-item:nth-child(5) { animation-delay: 1.0s; }
+
     .profile-link-item:last-child {
       border-bottom: none;
     }
@@ -357,13 +405,13 @@
       padding-top: 0.8rem;
       width: 100%;
       transition: color 0.2s;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 1.2s;
+      opacity: 0;
+      transform: translateY(10px);
     }
     .back-button:hover {
       color: #ffffff;
-    }
-
-    .projects-section {
-      margin: 1.5rem 0 1.8rem 0;
     }
 
     .project-embed {
@@ -389,6 +437,10 @@
       flex-shrink: 0;
       transition: transform 0.2s ease;
       cursor: pointer;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     .project-image img {
@@ -404,6 +456,10 @@
 
     .project-info {
       flex: 1;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     .project-title {
@@ -450,6 +506,10 @@
       padding-top: 0.8rem;
       width: 100%;
       transition: color 0.2s;
+      animation: buildItem 0.5s ease-out forwards;
+      animation-delay: 0.6s;
+      opacity: 0;
+      transform: translateY(10px);
     }
     .project-back-button:hover {
       color: #ffffff;
@@ -661,7 +721,7 @@
       </div>
     </div>
 
-    <div id="mainContent" class="main-content-compact">
+    <div id="mainContent" class="main-content-compact fade-section">
       <div class="dev-tagline-compact" id="devTagline">
         <p>discord.js and python developer Ye</p>
       </div>
@@ -671,11 +731,11 @@
       </div>
     </div>
 
-    <div class="more-section hidden" id="moreSection">
+    <div class="more-section fade-section hidden" id="moreSection">
       <div class="transform-embed" id="transformEmbed"></div>
     </div>
 
-    <div class="projects-section hidden" id="projectsSection">
+    <div class="projects-section fade-section hidden" id="projectsSection">
       <div class="project-embed">
         <div class="project-content">
           <div class="project-image" id="projectImage">
@@ -755,9 +815,8 @@
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.lanyard.rest/v1/users/${CONFIG.userId}`);
-        const { data, success } = await response.json();
-        return success ? data : null;
+        const response = await axios.get(`https://api.lanyard.rest/v1/users/${CONFIG.userId}`);
+        return response.data.success ? response.data.data : null;
       } catch {
         return null;
       }
@@ -976,8 +1035,7 @@
     const executePing = async () => {
       const start = performance.now();
       try {
-        const res = await fetch('https://httpbin.org/json');
-        await res.json();
+        const res = await axios.get('https://httpbin.org/json');
         appendPingEntry(Math.round(performance.now() - start));
       } catch {
         appendErrorEntry();
