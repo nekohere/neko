@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neko</title>
+  <title>neko · spotify live</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
@@ -111,30 +111,33 @@
       color: #cccccc;
     }
 
-    .view-more-trigger {
-      text-align: right;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+    .main-content-compact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
     }
-    .view-more-link {
-      color: #a0a0a0;
-      cursor: pointer;
-      text-decoration: none;
-      border-bottom: 1px dashed #4a4a4a;
-      padding-bottom: 2px;
-      transition: color 0.2s;
+
+    .dev-tagline-compact {
+      background: #0f0f0f;
+      border-radius: 50px;
+      padding: 0.7rem 1.2rem;
+      text-align: center;
+      border: 1px solid #2c2c2c;
     }
-    .view-more-link:hover {
-      color: #ffffff;
-      border-bottom-color: #ffffff;
+
+    .dev-tagline-compact p {
+      color: #e0e0e0;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
     }
 
     .spotify-embed {
       background: #0c0c0c;
       border-radius: 1.8rem;
       padding: 1.5rem 1.4rem;
-      margin: 0 0 1.8rem 0;
-      border-left: 6px solid #1db954;
+      border-left: 6px solid #ffffff;
       box-shadow: 0 8px 0 #030303;
     }
 
@@ -187,56 +190,51 @@
       margin-bottom: 0.7rem;
     }
 
-    .progress {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.7rem;
-      color: #a0a0a0;
-      margin-top: 0.5rem;
+    .progress-container {
+      margin-top: 0.75rem;
     }
 
-    .bar {
+    .progress-bar {
       background: #282828;
       height: 5px;
-      flex: 1;
+      width: 100%;
       border-radius: 10px;
       overflow: hidden;
+      margin-bottom: 0.3rem;
     }
 
-    .bar-fill {
-      background: #1db954;
+    .progress-fill {
+      background: #ffffff;
       height: 100%;
       width: 0%;
       border-radius: 10px;
       transition: width 0.3s linear;
     }
 
-    .not-playing {
-      background: #0b0b0b;
-      border-radius: 1.8rem;
-      padding: 1.5rem;
-      margin: 1.5rem 0 1.8rem 0;
-      text-align: center;
-      color: #9e9e9e;
-      border: 1px solid #2a2a2a;
-      font-size: 0.95rem;
+    .time-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #a0a0a0;
     }
 
-    .dev-tagline {
-      background: #0f0f0f;
-      border-radius: 50px;
-      padding: 0.9rem 1.2rem;
-      text-align: center;
-      border: 1px solid #2c2c2c;
-      margin-top: 1rem;
+    .view-more-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.25rem;
     }
-
-    .dev-tagline p {
-      color: #e0e0e0;
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: 0.3px;
+    .view-more-link {
+      color: #a0a0a0;
+      cursor: pointer;
+      text-decoration: none;
+      border-bottom: 1px dashed #4a4a4a;
+      padding-bottom: 2px;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .view-more-link:hover {
+      color: #ffffff;
+      border-bottom-color: #ffffff;
     }
 
     .more-section {
@@ -251,9 +249,8 @@
       background: #0c0c0c;
       border-radius: 1.8rem;
       padding: 1.6rem 1.5rem;
-      border-left: 6px solid #5865f2;
+      border-left: 6px solid #ffffff;
       box-shadow: 0 8px 0 #030303;
-      transition: all 0.1s ease;
     }
 
     .loading-state {
@@ -284,6 +281,24 @@
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
+    }
+
+    .projects-button-container {
+      margin-bottom: 0.5rem;
+    }
+    .projects-button {
+      color: #a0a0a0;
+      cursor: pointer;
+      text-decoration: none;
+      border-bottom: 1px dashed #4a4a4a;
+      padding-bottom: 2px;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+    .projects-button:hover {
+      color: #ffffff;
+      border-bottom-color: #ffffff;
     }
 
     .profile-link-item {
@@ -344,6 +359,99 @@
       transition: color 0.2s;
     }
     .back-button:hover {
+      color: #ffffff;
+    }
+
+    .projects-section {
+      margin: 1.5rem 0 1.8rem 0;
+    }
+
+    .project-embed {
+      background: #0c0c0c;
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      border-left: 6px solid #ffffff;
+      box-shadow: 0 8px 0 #030303;
+    }
+
+    .project-content {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-image:hover {
+      transform: scale(1.1);
+    }
+
+    .project-info {
+      flex: 1;
+    }
+
+    .project-title {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .project-name {
+      color: #ffffff;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .project-name a {
+      color: #ffffff;
+      text-decoration: none;
+      border-bottom: 1px dotted #7a7a7a;
+    }
+    .project-name a:hover {
+      border-bottom-color: #ffffff;
+    }
+
+    .project-description {
+      color: #a0a0a0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .project-back-button {
+      background: transparent;
+      border: none;
+      color: #a0a0a0;
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 0.5rem 0 0 0;
+      text-align: left;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-top: 1px solid #2a2a2a;
+      margin-top: 0.2rem;
+      padding-top: 0.8rem;
+      width: 100%;
+      transition: color 0.2s;
+    }
+    .project-back-button:hover {
       color: #ffffff;
     }
 
@@ -542,7 +650,7 @@
   <div class="card" id="app">
     <div class="profile-row" id="profileRow">
       <div class="avatar-wrapper">
-        <img class="avatar" id="avatarImg" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Neko avatar">
+        <img class="avatar" id="avatarImg" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar">
         <div class="status-badge" id="statusBadge"></div>
       </div>
       <div class="name-area">
@@ -553,26 +661,37 @@
       </div>
     </div>
 
-    <div id="mainContent">
-      <div class="view-more-trigger">
-        <span class="view-more-link" id="viewMoreBtn">view more...</span>
+    <div id="mainContent" class="main-content-compact">
+      <div class="dev-tagline-compact" id="devTagline">
+        <p>discord.js and python developer Ye</p>
       </div>
-      <div class="spotify-embed" id="spotifyEmbed">
-        <div class="not-playing">Not playing anything</div>
+      <div id="spotifyContainer"></div>
+      <div class="view-more-row">
+        <span class="view-more-link" id="viewMoreBtn">view more...</span>
       </div>
     </div>
 
     <div class="more-section hidden" id="moreSection">
-      <div class="transform-embed" id="transformEmbed">
-        <div class="loading-state" id="loadingState">
-          <img src="https://files.catbox.moe/xas1w0.gif" alt="thinking">
-          <div class="thinking-text">loading...</div>
-        </div>
-      </div>
+      <div class="transform-embed" id="transformEmbed"></div>
     </div>
 
-    <div class="dev-tagline" id="devTagline">
-      <p>discord.js and python developer Ye</p>
+    <div class="projects-section hidden" id="projectsSection">
+      <div class="project-embed">
+        <div class="project-content">
+          <div class="project-image" id="projectImage">
+            <img src="https://files.catbox.moe/n6vnon.webp" alt="jolly project">
+          </div>
+          <div class="project-info">
+            <div class="project-title">
+              <span class="project-name"><a href="https://discord.com/oauth2/authorize?client_id=1476697189035282555" target="_blank">jolly</a></span>
+            </div>
+            <div class="project-description">
+              utility roblox bot made in discord.js
+            </div>
+          </div>
+        </div>
+        <button class="project-back-button" id="projectsBackButton">← back</button>
+      </div>
     </div>
   </div>
 
@@ -644,27 +763,34 @@
       }
     };
 
-    const updateSpotifyUI = (spotify, timestamps) => {
-      const embed = document.getElementById('spotifyEmbed');
+    const updateSpotifyUI = (spotify) => {
+      const container = document.getElementById('spotifyContainer');
+      
       if (!spotify) {
-        embed.innerHTML = '<div class="not-playing">Not playing anything</div>';
+        container.innerHTML = '';
         return;
       }
 
-      const { percent, current, total } = calculateProgress(timestamps?.start, timestamps?.end);
+      const { percent, current, total } = calculateProgress(spotify.timestamps?.start, spotify.timestamps?.end);
 
-      embed.innerHTML = `
-        <div class="song-row">
-          <div class="album-art">
-            <img src="${spotify.album_art_url}" alt="album cover" loading="lazy">
+      container.innerHTML = `
+        <div class="spotify-embed">
+          <div class="song-row">
+            <div class="album-art">
+              <img src="${spotify.album_art_url}" alt="album cover" loading="lazy">
+            </div>
+            <div class="song-details">
+              <div class="song-name">${spotify.song}</div>
+              <div class="artist-name">${spotify.artist}</div>
+              <div class="album-name">${spotify.album}</div>
+            </div>
           </div>
-          <div class="song-details">
-            <div class="song-name">${spotify.song}</div>
-            <div class="artist-name">${spotify.artist}</div>
-            <div class="album-name">${spotify.album}</div>
-            <div class="progress">
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${percent}%;"></div>
+            </div>
+            <div class="time-labels">
               <span>${current}</span>
-              <div class="bar"><div class="bar-fill" style="width: ${percent}%;"></div></div>
               <span>${total}</span>
             </div>
           </div>
@@ -694,11 +820,14 @@
     const render = (data) => {
       if (!data) return;
       updateProfileUI(data.discord_user, data.discord_status || 'idle');
-      updateSpotifyUI(data.spotify, data.spotify?.timestamps);
+      updateSpotifyUI(data.spotify);
     };
 
     const resultsHTML = `
       <div class="results-state">
+        <div class="projects-button-container">
+          <span class="projects-button" id="projectsButtonInResults">projects</span>
+        </div>
         <div class="profile-link-item">
           <a href="https://discord.com/users/279827355743289344" target="_blank">
             <img class="profile-icon" src="https://files.catbox.moe/29jekg.jpg" alt="Discord">
@@ -726,6 +855,15 @@
             </div>
           </a>
         </div>
+        <div class="profile-link-item" style="border-bottom: 1px solid #222;">
+          <a href="https://www.roblox.com" target="_blank">
+            <img class="profile-icon" src="https://files.catbox.moe/98xr7w.jpg" alt="jollyandfestive">
+            <div class="profile-info">
+              <div class="handle">jollyandfestive</div>
+              <div class="platform">Roblox</div>
+            </div>
+          </a>
+        </div>
         <button class="back-button" id="backButton">← back</button>
       </div>
     `;
@@ -739,8 +877,15 @@
 
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const mainContent = document.getElementById('mainContent');
+    const projectsSection = document.getElementById('projectsSection');
     const moreSection = document.getElementById('moreSection');
     const transformEmbed = document.getElementById('transformEmbed');
+    const projectsBackBtn = document.getElementById('projectsBackButton');
+
+    projectsBackBtn.addEventListener('click', () => {
+      projectsSection.classList.add('hidden');
+      moreSection.classList.remove('hidden');
+    });
 
     viewMoreBtn.addEventListener('click', () => {
       mainContent.classList.add('hidden');
@@ -752,6 +897,11 @@
         document.getElementById('backButton').addEventListener('click', () => {
           mainContent.classList.remove('hidden');
           moreSection.classList.add('hidden');
+          projectsSection.classList.add('hidden');
+        });
+        document.getElementById('projectsButtonInResults').addEventListener('click', () => {
+          moreSection.classList.add('hidden');
+          projectsSection.classList.remove('hidden');
         });
       }, 4000);
     });
