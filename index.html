@@ -17,25 +17,26 @@
     html, body {
       height: 100%;
       width: 100%;
+      background: #0a0a0c;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     body {
-      background: #0a0a0c;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       padding: 1.5rem;
+      position: relative;
     }
 
     .card {
       max-width: 520px;
       width: 100%;
-      background: #0d0e10;
+      background: #000000;
       border-radius: 2rem;
       padding: 2rem 1.8rem;
-      box-shadow: 0 25px 40px -15px #000000, 0 0 0 1px rgba(255,255,255,0.03) inset;
-      border: 1px solid #1e1f24;
+      box-shadow: 0 30px 50px -20px #000000, 0 0 0 1px #2a2a2a inset;
+      border: 1px solid #222222;
     }
 
     .profile-row {
@@ -50,7 +51,7 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: #0f0f12;
+      background: #111111;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -62,7 +63,7 @@
       height: 76px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #1c1e22;
+      border: 3px solid #2a2a2a;
     }
 
     .status-badge {
@@ -72,14 +73,14 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      border: 3px solid #0d0e10;
+      border: 3px solid #000000;
       background-color: #2b2d33;
     }
 
     .status-badge.idle { background-color: #faa61a; }
     .status-badge.online { background-color: #3ba55d; }
     .status-badge.dnd { background-color: #ed4245; }
-    .status-badge.offline { background-color: #2b2d33; }
+    .status-badge.offline { background-color: #5f5f5f; }
 
     .name-area {
       flex: 1;
@@ -94,7 +95,7 @@
     }
 
     .username-tag {
-      color: #7f838c;
+      color: #a0a0a0;
       font-size: 0.95rem;
       display: flex;
       align-items: center;
@@ -103,20 +104,38 @@
     }
 
     .username-tag span {
-      background: #181a1f;
+      background: #1f1f1f;
       padding: 0.2rem 0.6rem;
       border-radius: 30px;
       font-size: 0.75rem;
-      color: #a0a4ae;
+      color: #cccccc;
+    }
+
+    .view-more-trigger {
+      text-align: right;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .view-more-link {
+      color: #a0a0a0;
+      cursor: pointer;
+      text-decoration: none;
+      border-bottom: 1px dashed #4a4a4a;
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .view-more-link:hover {
+      color: #ffffff;
+      border-bottom-color: #ffffff;
     }
 
     .spotify-embed {
-      background: #08090b;
+      background: #0c0c0c;
       border-radius: 1.8rem;
       padding: 1.5rem 1.4rem;
-      margin: 1.5rem 0 1.8rem 0;
-      border-left: 6px solid #ffffff;
-      box-shadow: 0 8px 0 #020202;
+      margin: 0 0 1.8rem 0;
+      border-left: 6px solid #1db954;
+      box-shadow: 0 8px 0 #030303;
     }
 
     .song-row {
@@ -129,7 +148,7 @@
       width: 90px;
       height: 90px;
       border-radius: 14px;
-      background: #121317;
+      background: #1a1a1a;
       box-shadow: 0 6px 12px #000000;
       flex-shrink: 0;
       overflow: hidden;
@@ -157,14 +176,14 @@
 
     .artist-name {
       font-size: 1rem;
-      color: #acb0b9;
+      color: #b3b3b3;
       margin-bottom: 0.3rem;
       font-weight: 400;
     }
 
     .album-name {
       font-size: 0.85rem;
-      color: #6b707b;
+      color: #7a7a7a;
       margin-bottom: 0.7rem;
     }
 
@@ -173,12 +192,12 @@
       align-items: center;
       gap: 0.5rem;
       font-size: 0.7rem;
-      color: #8b909b;
+      color: #a0a0a0;
       margin-top: 0.5rem;
     }
 
     .bar {
-      background: #1c1e24;
+      background: #282828;
       height: 5px;
       flex: 1;
       border-radius: 10px;
@@ -186,7 +205,7 @@
     }
 
     .bar-fill {
-      background: #ffffff;
+      background: #1db954;
       height: 100%;
       width: 0%;
       border-radius: 10px;
@@ -194,35 +213,387 @@
     }
 
     .not-playing {
-      background: #08090b;
+      background: #0b0b0b;
       border-radius: 1.8rem;
       padding: 1.5rem;
       margin: 1.5rem 0 1.8rem 0;
       text-align: center;
-      color: #8b909b;
-      border: 1px solid #1e1f24;
+      color: #9e9e9e;
+      border: 1px solid #2a2a2a;
       font-size: 0.95rem;
     }
 
     .dev-tagline {
-      background: #0f1013;
+      background: #0f0f0f;
       border-radius: 50px;
       padding: 0.9rem 1.2rem;
       text-align: center;
-      border: 1px solid #1e1f24;
+      border: 1px solid #2c2c2c;
       margin-top: 1rem;
     }
 
     .dev-tagline p {
-      color: #ffffff;
+      color: #e0e0e0;
       font-size: 1.1rem;
       font-weight: 500;
       letter-spacing: 0.3px;
     }
+
+    .more-section {
+      margin: 1.5rem 0 1.8rem 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .transform-embed {
+      background: #0c0c0c;
+      border-radius: 1.8rem;
+      padding: 1.6rem 1.5rem;
+      border-left: 6px solid #5865f2;
+      box-shadow: 0 8px 0 #030303;
+      transition: all 0.1s ease;
+    }
+
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 0.4rem 0;
+    }
+
+    .loading-state img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      opacity: 0.9;
+    }
+
+    .loading-state .thinking-text {
+      color: #a0a0a0;
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .results-state {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .profile-link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid #222;
+    }
+    .profile-link-item:last-child {
+      border-bottom: none;
+    }
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #1f1f1f;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+    .profile-info .handle {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .profile-info .platform {
+      color: #8f8f8f;
+      font-size: 0.8rem;
+    }
+    .profile-link-item a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .back-button {
+      background: transparent;
+      border: none;
+      color: #a0a0a0;
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 0.5rem 0 0 0;
+      text-align: left;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-top: 1px solid #2a2a2a;
+      margin-top: 0.2rem;
+      padding-top: 0.8rem;
+      width: 100%;
+      transition: color 0.2s;
+    }
+    .back-button:hover {
+      color: #ffffff;
+    }
+
+    .sleek-terminal {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 340px;
+      background: #111111;
+      border-radius: 18px;
+      box-shadow: 0 25px 40px -12px #000000, 0 0 0 1px rgba(255,255,255,0.15) inset;
+      font-family: 'SF Mono', 'Menlo', 'Fira Code', monospace;
+      font-size: 13px;
+      color: #eeeeee;
+      z-index: 1000;
+      border: 1px solid #333333;
+      transition: transform 0.2s ease, opacity 0.15s ease;
+      transform-origin: bottom right;
+    }
+
+    .sleek-terminal.hidden {
+      transform: scale(0.8);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .term-header {
+      background: #1e1e1e;
+      padding: 12px 16px;
+      border-radius: 18px 18px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #2f2f2f;
+      color: #cccccc;
+      font-weight: 450;
+    }
+
+    .custom-emoji {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: #ffffff;
+      border-radius: 4px 10px 10px 4px;
+      box-shadow: 0 0 0 2px #222 inset, 0 0 0 3px #aaa inset;
+      transform: rotate(2deg);
+      margin-right: 4px;
+    }
+
+    .term-header span:last-child {
+      background: #2a2a2a;
+      padding: 2px 12px;
+      border-radius: 30px;
+      font-size: 11px;
+      color: #b0b0b0;
+      border: 1px solid #3d3d3d;
+      margin-left: auto;
+    }
+
+    .term-body {
+      background: #0c0c0c;
+      padding: 18px 16px 16px 16px;
+      border-radius: 0 0 18px 18px;
+    }
+
+    .input-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1a1a1a;
+      padding: 10px 16px;
+      border-radius: 40px;
+      border: 1px solid #333;
+      margin-bottom: 18px;
+    }
+
+    .prompt {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    #pingCommand {
+      background: transparent;
+      border: none;
+      color: #f0f0f0;
+      font-family: inherit;
+      font-size: 14px;
+      width: 100%;
+      outline: none;
+    }
+
+    #pingCommand::placeholder {
+      color: #5a5a5a;
+    }
+
+    .output-panel {
+      background: #0a0a0a;
+      border-radius: 14px;
+      padding: 10px 4px 10px 14px;
+      border: 1px solid #2b2b2b;
+    }
+
+    .scroll-list {
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .scroll-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .scroll-list::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 20px;
+    }
+    .scroll-list::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 20px;
+    }
+    .scroll-list::-webkit-scrollbar-thumb:hover {
+      background: #777;
+    }
+
+    .ping-entry {
+      font-family: 'SF Mono', monospace;
+      color: #e0e0e0;
+      padding: 8px 4px;
+      border-bottom: 1px solid #252525;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .ping-badge {
+      background: #1f1f1f;
+      padding: 2px 12px;
+      border-radius: 40px;
+      color: #ffffff;
+      font-weight: 500;
+      border-left: 3px solid #888;
+      letter-spacing: 0.3px;
+    }
+
+    .ping-timestamp {
+      color: #777;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    .error-badge {
+      background: #2c1a1a;
+      padding: 2px 12px;
+      border-radius: 40px;
+      color: #ffafaf;
+      border-left: 3px solid #aa5555;
+    }
+
+    .toggle-term-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
+      border-radius: 30px;
+      background: #111111;
+      border: 2px solid #3a3a3a;
+      color: #f0f0f0;
+      font-size: 24px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #000000, 0 0 0 1px #5a5a5a inset;
+      transition: 0.06s linear;
+      z-index: 1100;
+      user-select: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .toggle-term-btn:active {
+      transform: translateY(6px);
+      box-shadow: 0 2px 0 #000000, 0 0 0 1px #5a5a5a inset;
+    }
+
+    .toggle-term-btn span {
+      transform: scale(0.9);
+      letter-spacing: 1px;
+    }
   </style>
 </head>
 <body>
-  <div class="card" id="app"></div>
+  <div class="card" id="app">
+    <div class="profile-row" id="profileRow">
+      <div class="avatar-wrapper">
+        <img class="avatar" id="avatarImg" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Neko avatar">
+        <div class="status-badge" id="statusBadge"></div>
+      </div>
+      <div class="name-area">
+        <div class="display-name" id="displayName">Neko</div>
+        <div class="username-tag" id="usernameTag">
+          @neeeeekkkkkooooo
+        </div>
+      </div>
+    </div>
+
+    <div id="mainContent">
+      <div class="view-more-trigger">
+        <span class="view-more-link" id="viewMoreBtn">view more...</span>
+      </div>
+      <div class="spotify-embed" id="spotifyEmbed">
+        <div class="not-playing">Not playing anything</div>
+      </div>
+    </div>
+
+    <div class="more-section hidden" id="moreSection">
+      <div class="transform-embed" id="transformEmbed">
+        <div class="loading-state" id="loadingState">
+          <img src="https://files.catbox.moe/xas1w0.gif" alt="thinking">
+          <div class="thinking-text">loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev-tagline" id="devTagline">
+      <p>discord.js and python developer Ye</p>
+    </div>
+  </div>
+
+  <div class="sleek-terminal hidden" id="sleekTerminal">
+    <div class="term-header">
+      <span class="custom-emoji"></span>
+      <span style="color:#ddd;">neko@react</span>
+      <span>zsh</span>
+    </div>
+    <div class="term-body">
+      <div class="input-line">
+        <span class="prompt">$</span>
+        <input type="text" id="pingCommand" placeholder="ping" autocomplete="off">
+      </div>
+      <div class="output-panel">
+        <div class="scroll-list" id="pingHistoryList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toggle-term-btn" id="toggleTermBtn"><span>{;}</span></div>
 
   <script>
     const CONFIG = {
@@ -230,19 +601,25 @@
       discordCdn: 'https://cdn.discordapp.com'
     };
 
-    const getAvatarUrl = (hash, id, discriminator = '0') => 
-      hash 
-        ? `${CONFIG.discordCdn}/avatars/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=128`
-        : `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
+    const getAvatarUrl = (hash, id, discriminator = '0') => {
+      if (hash) {
+        return `${CONFIG.discordCdn}/avatars/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=128`;
+      }
+      return `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
+    };
 
     const formatTime = (ms) => {
       if (!ms || ms < 0) return '0:00';
       const totalSeconds = Math.floor(ms / 1000);
-      return `${Math.floor(totalSeconds / 60)}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    const getStatusClass = (status) => 
-      ({ online: 'online', idle: 'idle', dnd: 'dnd' }[status] ?? 'offline');
+    const getStatusClass = (status) => {
+      const map = { online: 'online', idle: 'idle', dnd: 'dnd' };
+      return map[status] ?? 'offline';
+    };
 
     const calculateProgress = (start, end) => {
       if (!start || !end) return { percent: 0, current: '0:00', total: '0:00' };
@@ -267,95 +644,181 @@
       }
     };
 
-    const createProfileHTML = (discord_user, discord_status) => {
-      const { avatar, id, discriminator = '0', display_name, global_name, username } = discord_user ?? {};
+    const updateSpotifyUI = (spotify, timestamps) => {
+      const embed = document.getElementById('spotifyEmbed');
+      if (!spotify) {
+        embed.innerHTML = '<div class="not-playing">Not playing anything</div>';
+        return;
+      }
+
+      const { percent, current, total } = calculateProgress(timestamps?.start, timestamps?.end);
+
+      embed.innerHTML = `
+        <div class="song-row">
+          <div class="album-art">
+            <img src="${spotify.album_art_url}" alt="album cover" loading="lazy">
+          </div>
+          <div class="song-details">
+            <div class="song-name">${spotify.song}</div>
+            <div class="artist-name">${spotify.artist}</div>
+            <div class="album-name">${spotify.album}</div>
+            <div class="progress">
+              <span>${current}</span>
+              <div class="bar"><div class="bar-fill" style="width: ${percent}%;"></div></div>
+              <span>${total}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const updateProfileUI = (discord_user, discord_status) => {
+      const user = discord_user ?? {};
+      const avatar = user.avatar;
+      const id = user.id;
+      const discriminator = user.discriminator || '0';
+      const display_name = user.display_name;
+      const global_name = user.global_name;
+      const username = user.username;
       const avatarUrl = getAvatarUrl(avatar, id, discriminator);
       const displayName = display_name ?? global_name ?? 'Neko';
       const statusClass = getStatusClass(discord_status);
 
-      return `
-        <div class="profile-row">
-          <div class="avatar-wrapper">
-            <img class="avatar" src="${avatarUrl}" alt="Neko avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-            <div class="status-badge ${statusClass}"></div>
-          </div>
-          <div class="name-area">
-            <div class="display-name">${displayName}</div>
-            <div class="username-tag">
-              @${username ?? 'neeeeekkkkkooooo'}
-              ${discriminator !== '0' ? `<span>#${discriminator}</span>` : ''}
-            </div>
-          </div>
-        </div>
-      `;
+      document.getElementById('avatarImg').src = avatarUrl;
+      document.getElementById('statusBadge').className = `status-badge ${statusClass}`;
+      document.getElementById('displayName').textContent = displayName;
+      const usernameSpan = document.getElementById('usernameTag');
+      usernameSpan.innerHTML = `@${username ?? 'neeeeekkkkkooooo'}${discriminator !== '0' ? `<span>#${discriminator}</span>` : ''}`;
     };
 
-    const createSpotifyHTML = (spotify, timestamps) => {
-      if (!spotify) return `<div class="not-playing">Not playing anything</div>`;
-
-      const { percent, current, total } = calculateProgress(timestamps?.start, timestamps?.end);
-
-      return `
-        <div class="spotify-embed">
-          <div class="song-row">
-            <div class="album-art">
-              <img src="${spotify.album_art_url}" alt="album cover" loading="lazy">
-            </div>
-            <div class="song-details">
-              <div class="song-name">${spotify.song}</div>
-              <div class="artist-name">${spotify.artist}</div>
-              <div class="album-name">${spotify.album}</div>
-              <div class="progress">
-                <span>${current}</span>
-                <div class="bar"><div class="bar-fill" style="width: ${percent}%;"></div></div>
-                <span>${total}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
+    const render = (data) => {
+      if (!data) return;
+      updateProfileUI(data.discord_user, data.discord_status || 'idle');
+      updateSpotifyUI(data.spotify, data.spotify?.timestamps);
     };
 
-    const createDevTaglineHTML = () => `
-      <div class="dev-tagline">
-        <p>discord.js and python developer Ye</p>
+    const resultsHTML = `
+      <div class="results-state">
+        <div class="profile-link-item">
+          <a href="https://discord.com/users/279827355743289344" target="_blank">
+            <img class="profile-icon" src="https://files.catbox.moe/29jekg.jpg" alt="Discord">
+            <div class="profile-info">
+              <div class="handle">@neeeeekkkkkooooo</div>
+              <div class="platform">Discord</div>
+            </div>
+          </a>
+        </div>
+        <div class="profile-link-item">
+          <a href="https://github.com/nekohere" target="_blank">
+            <img class="profile-icon" src="https://files.catbox.moe/3fjgzl.jpg" alt="GitHub">
+            <div class="profile-info">
+              <div class="handle">Neko</div>
+              <div class="platform">GitHub</div>
+            </div>
+          </a>
+        </div>
+        <div class="profile-link-item">
+          <a href="https://www.bopimo.com/users/Nekooooo" target="_blank">
+            <img class="profile-icon" src="https://i.imgur.com/yS9k0o0.png" alt="Bopimo">
+            <div class="profile-info">
+              <div class="handle">Neko</div>
+              <div class="platform">Bopimo</div>
+            </div>
+          </a>
+        </div>
+        <button class="back-button" id="backButton">← back</button>
       </div>
     `;
 
-    const createEmptyStateHTML = () => `
-      ${createProfileHTML({ username: 'neeeeekkkkkooooo' }, 'offline')}
-      <div class="not-playing">Not playing anything</div>
-      ${createDevTaglineHTML()}
+    const loadingHTML = `
+      <div class="loading-state" id="loadingState">
+        <img src="https://files.catbox.moe/xas1w0.gif" alt="thinking">
+        <div class="thinking-text">loading...</div>
+      </div>
     `;
 
-    const render = (data) => {
-      const container = document.getElementById('app');
-      
-      if (!data) {
-        container.innerHTML = createEmptyStateHTML();
-        return;
-      }
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
+    const mainContent = document.getElementById('mainContent');
+    const moreSection = document.getElementById('moreSection');
+    const transformEmbed = document.getElementById('transformEmbed');
 
-      const { discord_user, discord_status = 'idle', listening_to_spotify, spotify } = data;
-      const isPlaying = listening_to_spotify && spotify;
+    viewMoreBtn.addEventListener('click', () => {
+      mainContent.classList.add('hidden');
+      moreSection.classList.remove('hidden');
+      transformEmbed.innerHTML = loadingHTML;
 
-      container.innerHTML = `
-        ${createProfileHTML(discord_user, discord_status)}
-        ${isPlaying ? createSpotifyHTML(spotify, spotify.timestamps) : '<div class="not-playing">Not playing anything</div>'}
-        ${createDevTaglineHTML()}
-      `;
+      setTimeout(() => {
+        transformEmbed.innerHTML = resultsHTML;
+        document.getElementById('backButton').addEventListener('click', () => {
+          mainContent.classList.remove('hidden');
+          moreSection.classList.add('hidden');
+        });
+      }, 4000);
+    });
+
+    const historyList = document.getElementById('pingHistoryList');
+    const pingInput = document.getElementById('pingCommand');
+    const sleekTerminal = document.getElementById('sleekTerminal');
+    const toggleBtn = document.getElementById('toggleTermBtn');
+
+    const clearTerminalLogs = () => {
+      while (historyList.firstChild) historyList.removeChild(historyList.firstChild);
     };
 
+    toggleBtn.addEventListener('click', () => {
+      const willBeHidden = !sleekTerminal.classList.contains('hidden');
+      sleekTerminal.classList.toggle('hidden');
+      if (willBeHidden) clearTerminalLogs();
+    });
+
+    const appendPingEntry = (ms) => {
+      const entry = document.createElement('div');
+      entry.className = 'ping-entry';
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      entry.innerHTML = `<span class="ping-badge">ping: ${ms}ms</span><span class="ping-timestamp">${timeStr}</span>`;
+      historyList.prepend(entry);
+      while (historyList.children.length > 10) historyList.removeChild(historyList.lastElementChild);
+    };
+
+    const appendErrorEntry = () => {
+      const entry = document.createElement('div');
+      entry.className = 'ping-entry';
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      entry.innerHTML = `<span class="error-badge">ping: failed</span><span class="ping-timestamp">${timeStr}</span>`;
+      historyList.prepend(entry);
+      while (historyList.children.length > 10) historyList.removeChild(historyList.lastElementChild);
+    };
+
+    const executePing = async () => {
+      const start = performance.now();
+      try {
+        const res = await fetch('https://httpbin.org/json');
+        await res.json();
+        appendPingEntry(Math.round(performance.now() - start));
+      } catch {
+        appendErrorEntry();
+      }
+    };
+
+    pingInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const value = pingInput.value.trim();
+        if (value.toLowerCase() === 'ping') {
+          executePing();
+          pingInput.value = '';
+        } else if (value !== '') {
+          pingInput.value = '';
+        }
+      }
+    });
+
     (async () => {
-      const container = document.getElementById('app');
       let currentData = null;
-      
       const update = async () => {
         const newData = await fetchData();
         if (newData) currentData = newData;
         render(currentData);
       };
-
       await update();
       setInterval(update, 1000);
     })();
