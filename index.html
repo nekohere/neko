@@ -1,10 +1,9 @@
-// chatgpt made this
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neko · status</title>
+  <title>neko</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
@@ -15,9 +14,13 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
     body {
       background: #0a0a0c;
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -112,20 +115,8 @@
       border-radius: 1.8rem;
       padding: 1.5rem 1.4rem;
       margin: 1.5rem 0 1.8rem 0;
-      border-left: 6px solid #1db954;
+      border-left: 6px solid #ffffff;
       box-shadow: 0 8px 0 #020202;
-    }
-
-    .spotify-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-      color: #9ca0aa;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      letter-spacing: 0.3px;
     }
 
     .song-row {
@@ -195,7 +186,7 @@
     }
 
     .bar-fill {
-      background: #1db954;
+      background: #ffffff;
       height: 100%;
       width: 0%;
       border-radius: 10px;
@@ -228,168 +219,144 @@
       font-weight: 500;
       letter-spacing: 0.3px;
     }
-
-    .dev-tagline strong {
-      background: #1c1e24;
-      font-weight: 700;
-      color: #ffffff;
-      padding: 0.1rem 0.7rem;
-      border-radius: 40px;
-      margin: 0 0.3rem;
-    }
   </style>
 </head>
 <body>
   <div class="card" id="app"></div>
 
   <script>
-    (function() {
+    const CONFIG = {
+      userId: '279827355743289344',
+      discordCdn: 'https://cdn.discordapp.com'
+    };
+
+    const getAvatarUrl = (hash, id, discriminator = '0') => 
+      hash 
+        ? `${CONFIG.discordCdn}/avatars/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=128`
+        : `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
+
+    const formatTime = (ms) => {
+      if (!ms || ms < 0) return '0:00';
+      const totalSeconds = Math.floor(ms / 1000);
+      return `${Math.floor(totalSeconds / 60)}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
+    };
+
+    const getStatusClass = (status) => 
+      ({ online: 'online', idle: 'idle', dnd: 'dnd' }[status] ?? 'offline');
+
+    const calculateProgress = (start, end) => {
+      if (!start || !end) return { percent: 0, current: '0:00', total: '0:00' };
+      const now = Date.now();
+      const total = end - start;
+      const elapsed = Math.min(now - start, total);
+      const percent = total > 0 ? (elapsed / total) * 100 : 0;
+      return {
+        percent: Math.min(100, Math.max(0, percent)),
+        current: formatTime(elapsed),
+        total: formatTime(total)
+      };
+    };
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://api.lanyard.rest/v1/users/${CONFIG.userId}`);
+        const { data, success } = await response.json();
+        return success ? data : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const createProfileHTML = (discord_user, discord_status) => {
+      const { avatar, id, discriminator = '0', display_name, global_name, username } = discord_user ?? {};
+      const avatarUrl = getAvatarUrl(avatar, id, discriminator);
+      const displayName = display_name ?? global_name ?? 'Neko';
+      const statusClass = getStatusClass(discord_status);
+
+      return `
+        <div class="profile-row">
+          <div class="avatar-wrapper">
+            <img class="avatar" src="${avatarUrl}" alt="Neko avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="status-badge ${statusClass}"></div>
+          </div>
+          <div class="name-area">
+            <div class="display-name">${displayName}</div>
+            <div class="username-tag">
+              @${username ?? 'neeeeekkkkkooooo'}
+              ${discriminator !== '0' ? `<span>#${discriminator}</span>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const createSpotifyHTML = (spotify, timestamps) => {
+      if (!spotify) return `<div class="not-playing">Not playing anything</div>`;
+
+      const { percent, current, total } = calculateProgress(timestamps?.start, timestamps?.end);
+
+      return `
+        <div class="spotify-embed">
+          <div class="song-row">
+            <div class="album-art">
+              <img src="${spotify.album_art_url}" alt="album cover" loading="lazy">
+            </div>
+            <div class="song-details">
+              <div class="song-name">${spotify.song}</div>
+              <div class="artist-name">${spotify.artist}</div>
+              <div class="album-name">${spotify.album}</div>
+              <div class="progress">
+                <span>${current}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${percent}%;"></div></div>
+                <span>${total}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const createDevTaglineHTML = () => `
+      <div class="dev-tagline">
+        <p>discord.js and python developer Ye</p>
+      </div>
+    `;
+
+    const createEmptyStateHTML = () => `
+      ${createProfileHTML({ username: 'neeeeekkkkkooooo' }, 'offline')}
+      <div class="not-playing">Not playing anything</div>
+      ${createDevTaglineHTML()}
+    `;
+
+    const render = (data) => {
       const container = document.getElementById('app');
-      const userId = '279827355743289344';
-      const discordCdn = 'https://cdn.discordapp.com';
+      
+      if (!data) {
+        container.innerHTML = createEmptyStateHTML();
+        return;
+      }
 
-      const getAvatarUrl = (hash, id, discriminator = '0') => 
-        hash 
-          ? `${discordCdn}/avatars/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=128`
-          : `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
+      const { discord_user, discord_status = 'idle', listening_to_spotify, spotify } = data;
+      const isPlaying = listening_to_spotify && spotify;
 
-      const formatTime = (ms) => {
-        if (!ms || ms < 0) return '0:00';
-        const totalSeconds = Math.floor(ms / 1000);
-        return `${Math.floor(totalSeconds / 60)}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
-      };
+      container.innerHTML = `
+        ${createProfileHTML(discord_user, discord_status)}
+        ${isPlaying ? createSpotifyHTML(spotify, spotify.timestamps) : '<div class="not-playing">Not playing anything</div>'}
+        ${createDevTaglineHTML()}
+      `;
+    };
 
-      const getStatusClass = (status) => 
-        ({ online: 'online', idle: 'idle', dnd: 'dnd' }[status] ?? 'offline');
-
-      const calculateProgress = (start, end) => {
-        if (!start || !end) return { percent: 0, current: '0:00', total: '0:00' };
-        const now = Date.now();
-        const total = end - start;
-        const elapsed = Math.min(now - start, total);
-        const percent = total > 0 ? (elapsed / total) * 100 : 0;
-        return {
-          percent: Math.min(100, Math.max(0, percent)),
-          current: formatTime(elapsed),
-          total: formatTime(total)
-        };
-      };
-
-      const fetchData = async () => {
-        try {
-          const response = await fetch('https://api.lanyard.rest/v1/users/279827355743289344');
-          const { data, success } = await response.json();
-          return success ? data : null;
-        } catch {
-          return null;
-        }
-      };
-
-      const render = (data) => {
-        if (!data) {
-          container.innerHTML = `
-            <div class="profile-row">
-              <div class="avatar-wrapper">
-                <div class="avatar" style="background: #121317;"></div>
-                <div class="status-badge offline"></div>
-              </div>
-              <div class="name-area">
-                <div class="display-name">Neko</div>
-                <div class="username-tag">@neeeeekkkkkooooo</div>
-              </div>
-            </div>
-            <div class="not-playing">Not playing anything</div>
-            <div class="dev-tagline">
-              <p>discord.js and python developer Ye</p>
-            </div>
-          `;
-          return;
-        }
-
-        const { 
-          discord_user, 
-          discord_status = 'idle', 
-          listening_to_spotify, 
-          spotify 
-        } = data;
-
-        const { 
-          avatar, 
-          id, 
-          discriminator = '0', 
-          display_name, 
-          global_name, 
-          username 
-        } = discord_user ?? {};
-
-        const avatarUrl = getAvatarUrl(avatar, id, discriminator);
-        const displayName = display_name ?? global_name ?? 'Neko';
-        const statusClass = getStatusClass(discord_status);
-        const isPlaying = listening_to_spotify && spotify;
-
-        const { 
-          percent = 0, 
-          current = '0:00', 
-          total = '0:00' 
-        } = isPlaying 
-          ? calculateProgress(spotify.timestamps?.start, spotify.timestamps?.end)
-          : {};
-
-        container.innerHTML = `
-          <div class="profile-row">
-            <div class="avatar-wrapper">
-              <img class="avatar" src="${avatarUrl}" alt="Neko avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-              <div class="status-badge ${statusClass}"></div>
-            </div>
-            <div class="name-area">
-              <div class="display-name">${displayName}</div>
-              <div class="username-tag">
-                @${username ?? 'neeeeekkkkkooooo'}
-                ${discriminator !== '0' ? `<span>#${discriminator}</span>` : ''}
-              </div>
-            </div>
-          </div>
-
-          ${isPlaying ? `
-          <div class="spotify-embed">
-            <div class="spotify-header">spotify</div>
-            <div class="song-row">
-              <div class="album-art">
-                <img src="${spotify.album_art_url}" alt="album cover" loading="lazy">
-              </div>
-              <div class="song-details">
-                <div class="song-name">${spotify.song}</div>
-                <div class="artist-name">${spotify.artist}</div>
-                <div class="album-name">${spotify.album}</div>
-                <div class="progress">
-                  <span>${current}</span>
-                  <div class="bar"><div class="bar-fill" style="width: ${percent}%;"></div></div>
-                  <span>${total}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          ` : `
-          <div class="not-playing">Not playing anything</div>
-          `}
-
-          <div class="dev-tagline">
-            <p>discord.js and python developer Ye</p>
-          </div>
-        `;
-      };
-
+    (async () => {
+      const container = document.getElementById('app');
       let currentData = null;
       
       const update = async () => {
         const newData = await fetchData();
-        if (newData) {
-          currentData = newData;
-        }
+        if (newData) currentData = newData;
         render(currentData);
       };
 
-      update();
+      await update();
       setInterval(update, 1000);
     })();
   </script>
