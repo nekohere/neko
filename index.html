@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neko · spotify live</title>
+  <title>neko</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
@@ -820,7 +820,9 @@
     const render = (data) => {
       if (!data) return;
       updateProfileUI(data.discord_user, data.discord_status || 'idle');
-      updateSpotifyUI(data.spotify);
+      if (document.getElementById('mainContent').classList.contains('hidden') === false) {
+        updateSpotifyUI(data.spotify);
+      }
     };
 
     const resultsHTML = `
@@ -882,6 +884,36 @@
     const transformEmbed = document.getElementById('transformEmbed');
     const projectsBackBtn = document.getElementById('projectsBackButton');
 
+    let intervalId = null;
+    let isUpdating = true;
+
+    const stopUpdates = () => {
+      isUpdating = false;
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const resumeUpdates = () => {
+      if (isUpdating) return;
+      isUpdating = true;
+      startUpdates();
+    };
+
+    const startUpdates = async () => {
+      let currentData = null;
+      const update = async () => {
+        if (!isUpdating) return;
+        const newData = await fetchData();
+        if (newData) currentData = newData;
+        render(currentData);
+      };
+      await update();
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(update, 1000);
+    };
+
     projectsBackBtn.addEventListener('click', () => {
       projectsSection.classList.add('hidden');
       moreSection.classList.remove('hidden');
@@ -891,6 +923,7 @@
       mainContent.classList.add('hidden');
       moreSection.classList.remove('hidden');
       transformEmbed.innerHTML = loadingHTML;
+      stopUpdates();
 
       setTimeout(() => {
         transformEmbed.innerHTML = resultsHTML;
@@ -898,6 +931,7 @@
           mainContent.classList.remove('hidden');
           moreSection.classList.add('hidden');
           projectsSection.classList.add('hidden');
+          resumeUpdates();
         });
         document.getElementById('projectsButtonInResults').addEventListener('click', () => {
           moreSection.classList.add('hidden');
@@ -962,16 +996,7 @@
       }
     });
 
-    (async () => {
-      let currentData = null;
-      const update = async () => {
-        const newData = await fetchData();
-        if (newData) currentData = newData;
-        render(currentData);
-      };
-      await update();
-      setInterval(update, 1000);
-    })();
+    startUpdates();
   </script>
 </body>
 </html>
