@@ -1,42 +1,64 @@
 (function() {
-  const element = new Image();
-  Object.defineProperty(element, 'id', {
-    get: function() {
-      devToolsOpen();
-    }
-  });
+  let devtoolsDetected = false;
   
-  function devToolsOpen() {
-    document.body.innerHTML = '';
-    const messageDiv = document.createElement('div');
-    messageDiv.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0a0a0c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      font-family: 'Inter', sans-serif;
-      font-size: 8rem;
-      color: #ffffff;
-      font-weight: bold;
-    `;
-    messageDiv.textContent = '-_-';
-    document.body.appendChild(messageDiv);
-  }
-
-  setInterval(() => {
+  const beforeLoadCheck = () => {
     const start = performance.now();
     debugger;
     const end = performance.now();
     if (end - start > 100) {
-      devToolsOpen();
+      devtoolsDetected = true;
+      showDevtoolsMessage();
     }
-  }, 1000);
+  };
+
+  const showDevtoolsMessage = () => {
+    if (document.body) {
+      document.body.innerHTML = '';
+      const messageDiv = document.createElement('div');
+      messageDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        font-family: 'Inter', sans-serif;
+        font-size: 8rem;
+        color: #ffffff;
+        font-weight: bold;
+      `;
+      messageDiv.textContent = '-_-';
+      document.body.appendChild(messageDiv);
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', beforeLoadCheck);
+  } else {
+    beforeLoadCheck();
+  }
+
+  const element = new Image();
+  Object.defineProperty(element, 'id', {
+    get: function() {
+      showDevtoolsMessage();
+    }
+  });
+
+  setInterval(() => {
+    if (devtoolsDetected) return;
+    const start = performance.now();
+    debugger;
+    const end = performance.now();
+    if (end - start > 100) {
+      devtoolsDetected = true;
+      showDevtoolsMessage();
+    }
+  }, 500);
 
   document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -50,7 +72,7 @@
         (e.ctrlKey && e.key === 'U') ||
         (e.ctrlKey && e.key === 'u')) {
       e.preventDefault();
-      devToolsOpen();
+      showDevtoolsMessage();
       return false;
     }
   });
@@ -74,10 +96,6 @@
     console[method] = function() {};
   });
 
-  const devtools = {
-    open: false
-  };
-
   document.addEventListener('mousedown', (e) => {
     if (e.button === 2) {
       e.preventDefault();
@@ -89,8 +107,14 @@
   document.addEventListener('keyup', (e) => {
     if (blockedKeys.includes(e.keyCode) || (e.ctrlKey && e.shiftKey && blockedKeys.includes(e.keyCode))) {
       e.preventDefault();
-      devToolsOpen();
+      showDevtoolsMessage();
       return false;
+    }
+  });
+
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      beforeLoadCheck();
     }
   });
 })();
@@ -234,9 +258,9 @@ const resultsHTML = `
     </div>
     <div class="profile-link-item" style="border-bottom: 1px solid #222;">
       <a href="https://www.roblox.com" target="_blank">
-        <img class="profile-icon" src="https://files.catbox.moe/98xr7w.jpg" alt="jollyandfestive">
+        <img class="profile-icon" src="https://files.catbox.moe/98xr7w.jpg" alt="neeeeekkooooo">
         <div class="profile-info">
-          <div class="handle">jollyandfestive</div>
+          <div class="handle">neeeeekkooooo</div>
           <div class="platform">Roblox</div>
         </div>
       </a>
