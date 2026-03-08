@@ -1,3 +1,100 @@
+(function() {
+  const element = new Image();
+  Object.defineProperty(element, 'id', {
+    get: function() {
+      devToolsOpen();
+    }
+  });
+  
+  function devToolsOpen() {
+    document.body.innerHTML = '';
+    const messageDiv = document.createElement('div');
+    messageDiv.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      font-family: 'Inter', sans-serif;
+      font-size: 8rem;
+      color: #ffffff;
+      font-weight: bold;
+    `;
+    messageDiv.textContent = '-_-';
+    document.body.appendChild(messageDiv);
+  }
+
+  setInterval(() => {
+    const start = performance.now();
+    debugger;
+    const end = performance.now();
+    if (end - start > 100) {
+      devToolsOpen();
+    }
+  }, 1000);
+
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    return false;
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+        (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+        (e.ctrlKey && e.key === 'U') ||
+        (e.ctrlKey && e.key === 'u')) {
+      e.preventDefault();
+      devToolsOpen();
+      return false;
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'U' && e.ctrlKey) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  const originalConsole = {
+    log: console.log,
+    info: console.info,
+    warn: console.warn,
+    error: console.error,
+    debug: console.debug
+  };
+
+  Object.keys(originalConsole).forEach(method => {
+    console[method] = function() {};
+  });
+
+  const devtools = {
+    open: false
+  };
+
+  document.addEventListener('mousedown', (e) => {
+    if (e.button === 2) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  const blockedKeys = [123, 73, 74, 85];
+  document.addEventListener('keyup', (e) => {
+    if (blockedKeys.includes(e.keyCode) || (e.ctrlKey && e.shiftKey && blockedKeys.includes(e.keyCode))) {
+      e.preventDefault();
+      devToolsOpen();
+      return false;
+    }
+  });
+})();
+
 const CONFIG = { userId: '279827355743289344', discordCdn: 'https://cdn.discordapp.com' };
 let currentSongId = null;
 let intervalId = null;
