@@ -265,7 +265,6 @@ const resultsHTML = `
         </div>
       </a>
     </div>
-    <button class="back-button" id="backButton">← back</button>
   </div>
 `;
 
@@ -319,12 +318,6 @@ viewMoreBtn.addEventListener('click', () => {
 
   setTimeout(() => {
     transformEmbed.innerHTML = resultsHTML;
-    document.getElementById('backButton').addEventListener('click', () => {
-      mainContent.classList.remove('hidden');
-      moreSection.classList.add('hidden');
-      projectsSection.classList.add('hidden');
-      resumeUpdates();
-    });
     document.getElementById('projectsButtonInResults').addEventListener('click', () => {
       moreSection.classList.add('hidden');
       projectsSection.classList.remove('hidden');
