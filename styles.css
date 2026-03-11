@@ -311,6 +311,7 @@ body {
   border-left: 6px solid #ffffff;
   box-shadow: 0 8px 0 #030303;
   transition: transform 0.2s ease, border-left-color 0.2s ease;
+  margin-bottom: 1rem;
 }
 
 .transform-embed:hover {
