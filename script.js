@@ -3,6 +3,7 @@ let currentSongId = null;
 let intervalId = null;
 let isUpdating = true;
 let rainbowActive = false;
+let ossedData = null;
 
 const getAvatarUrl = (hash, id, discriminator) => {
   if (hash) return `${CONFIG.discordCdn}/avatars/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=128`;
@@ -33,11 +34,65 @@ const calculateProgress = (start, end) => {
   };
 };
 
-const fetchData = async () => {
+const fetchLanyard = async () => {
   try {
     const response = await axios.get(`https://api.lanyard.rest/v1/users/${CONFIG.userId}`);
     return response.data.success ? response.data.data : null;
   } catch { return null; }
+};
+
+const fetchOssed = async () => {
+  try {
+    const response = await axios.get(`https://ossed.lol/api/discord-user?id=${CONFIG.userId}`);
+    if (response.data && response.data.user) {
+      ossedData = response.data;
+      updateBadgeAndBio();
+    }
+  } catch (error) {
+    console.error('failed to fetch ossed data', error);
+  }
+};
+
+const formatNitroDate = (isoString) => {
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  }).replace(' at ', ' at ');
+};
+
+const updateBadgeAndBio = () => {
+  if (!ossedData) return;
+  
+  const badgeArea = document.getElementById('badgeArea');
+  const bioArea = document.getElementById('bioArea');
+  
+  badgeArea.innerHTML = '';
+  bioArea.innerHTML = '';
+  
+  const premiumBadge = ossedData.badges?.find(b => b.id === 'premium');
+  if (premiumBadge && ossedData.premium_since) {
+    const badgeDiv = document.createElement('div');
+    badgeDiv.className = 'nitro-badge';
+    
+    const iconUrl = `https://cdn.discordapp.com/badge-icons/${premiumBadge.icon}.png`;
+    const formattedDate = formatNitroDate(ossedData.premium_since);
+    const timestamp = Math.floor(new Date(ossedData.premium_since).getTime() / 1000);
+    
+    badgeDiv.innerHTML = `
+      <img src="${iconUrl}" alt="Nitro" width="18" height="18">
+      <span class="badge-tooltip">Subscribed to Nitro since <t:${timestamp}:F></span>
+    `;
+    badgeArea.appendChild(badgeDiv);
+  }
+  
+  if (ossedData.user?.bio) {
+    bioArea.textContent = ossedData.user.bio;
+  }
 };
 
 const updateSpotifyUI = (spotify) => {
@@ -164,7 +219,7 @@ const startUpdates = async () => {
   let currentData = null;
   const update = async () => {
     if (!isUpdating) return;
-    const newData = await fetchData();
+    const newData = await fetchLanyard();
     if (newData) currentData = newData;
     render(currentData);
   };
@@ -284,4 +339,5 @@ commandInput.addEventListener('keydown', (e) => {
   }
 });
 
+fetchOssed();
 startUpdates();
